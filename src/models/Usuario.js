@@ -5,7 +5,7 @@ const schema = new Schema({
     name:{
         type: String,
         required: true,
-        trim: true
+        trim: true // remove espaços do início e fim da string
     },
     sex: {
         type: String,

@@ -5,6 +5,8 @@ const router = express.Router()
 
 const mongoose = require('../bin/db')
 
+const Usuario = require('./models/Usuario')
+
 //Carrega rotas
 const indexRoute = require('./routes/index-route')
 const usuarioRoute = require('./routes/usuario-route')

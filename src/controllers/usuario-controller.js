@@ -1,6 +1,21 @@
 
+const mongoose = require('mongoose')
+const Usuario = mongoose.model('Usuarios')
+
 exports.post = (req, res, next)=>{
-    res.status(201).send(req.body)
+    var usuario = new Usuario()
+        usuario.name = req.body.name
+        usuario.sex = req.body.sex
+        usuario.birthdate = req.body.birthdate
+        usuario.tel = req.body.tel
+        usuario.address = req.body.address
+        usuario.tags = req.body.tags
+
+    usuario.save().then(()=>{
+        res.status(200).send({message: "Produto cadastrado"})
+    }).catch((erro)=>{
+        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+    })
 }
 
 exports.put =  (req, res, next)=>{
