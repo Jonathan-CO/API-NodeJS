@@ -21,7 +21,9 @@ const route = router.get('/', (req, res, next)=>{
 app.use('/', route)
 
 server.listen(port)
+server.on('listening', onListening)
 
+console.log('ok')
 function normalizePort(val){ // baseada no gerador de código do express
     const port = parseInt(val, 10); // valor na base 10
     if(isNaN(port)){
@@ -31,4 +33,10 @@ function normalizePort(val){ // baseada no gerador de código do express
         return port
     }
     return false
+}
+
+function onListening(){
+    const addr = server.address()
+    const bind = typeof addr == 'string' ? 'pipe' + addr : 'pipe' + addr.port
+    debug('Listening on '+bind);
 }
