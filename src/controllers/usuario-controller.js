@@ -21,6 +21,17 @@ exports.getById = (req,res,next)=>{
     })
 }
 
+exports.getByTag = (req, res, next)=>{
+    Usuario.find({
+        tags: req.params.tag,
+        active: true
+    }, 'name sex tel address').then((usuarios)=>{
+        res.status(200).send({usuarios: usuarios})
+    }).catch((err)=>{
+        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+    })
+}
+
 
 exports.post = (req, res, next)=>{
     var usuario = new Usuario()
@@ -29,7 +40,7 @@ exports.post = (req, res, next)=>{
         usuario.birthdate = req.body.birthdate
         usuario.tel = req.body.tel
         usuario.address = req.body.address
-        usuario.tags = req.body.tags
+        usuario.tags = req.body.tags.toLowerCase()
 
     usuario.save().then(()=>{
         res.status(200).send({message: "Produto cadastrado"})

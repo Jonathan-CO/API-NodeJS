@@ -7,6 +7,8 @@ router.get('/', controller.get);
 
 router.get('/:id', controller.getById);
 
+router.get('/tags/:tag', controller.getByTag); //need "/tags" - conflito /:id)
+
 router.post('/', controller.post);
 
 router.put('/:id', controller.put);
