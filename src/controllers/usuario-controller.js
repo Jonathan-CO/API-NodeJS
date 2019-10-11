@@ -8,7 +8,7 @@ exports.get = (req,res,next)=>{
     }, 'name tel address').then((usuarios)=>{
         res.status(200).send({usuarios: usuarios})
     }).catch((err)=>{
-        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+        res.status(400).send({message: "Erro ao listar usuários", data: erro})
     })
 }
 
@@ -17,7 +17,7 @@ exports.getById = (req,res,next)=>{
     Usuario.findById(req.params.id, 'name sex tel address tags').then((usuarios)=>{
         res.status(200).send({usuarios: usuarios})
     }).catch((err)=>{
-        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+        res.status(400).send({message: "Erro ao buscar usuário", data: erro})
     })
 }
 
@@ -28,7 +28,7 @@ exports.getByTag = (req, res, next)=>{
     }, 'name sex tel address').then((usuarios)=>{
         res.status(200).send({usuarios: usuarios})
     }).catch((err)=>{
-        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+        res.status(400).send({message: "Erro ao buscar usuário", data: erro})
     })
 }
 
@@ -43,17 +43,26 @@ exports.post = (req, res, next)=>{
         usuario.tags = req.body.tags.toLowerCase()
 
     usuario.save().then(()=>{
-        res.status(200).send({message: "Produto cadastrado"})
+        res.status(200).send({message: "Usuário cadastrado com sucesso"})
     }).catch((erro)=>{
-        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+        res.status(400).send({message: "Erro ao cadastrar usuário", data: erro})
     })
 }
 
 exports.put =  (req, res, next)=>{
-    const id = req.params.id
-    res.status(200).send({ // status 201 = created
-        id: id,
-        item: req.body 
+    Usuario.findByIdAndUpdate( req.params.id, {
+        $set:{
+            name: req.body.name,
+            sex: req.body.sex,
+            birthdate: req.body.birthdate,
+            tel: req.body.tel,
+            address: req.body.address,
+            tags: req.body.tags
+        }
+    }).then(()=>{
+        res.status(200).send({message: "Usuário editado com sucesso"})
+    }).catch((erro)=>{
+        res.status(400).send({message: "Erro ao editar o usuário", data: erro})
     })
 }
 
