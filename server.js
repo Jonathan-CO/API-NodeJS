@@ -3,7 +3,7 @@ const express = require ('express')
 const debug = require ('debug')('nodestr:server')
 
 const app = express()
-const port = 3000
+const port = normalizePort(process.env.PORT || 3000)
 app.set('port', port)
 
 
@@ -21,4 +21,14 @@ const route = router.get('/', (req, res, next)=>{
 app.use('/', route)
 
 server.listen(port)
-console.log("ok")
+
+function normalizePort(val){ // baseada no gerador de código do express
+    const port = parseInt(val, 10); // valor na base 10
+    if(isNaN(port)){
+        return val
+    }
+    if (port>= 0){
+        return port
+    }
+    return false
+}
