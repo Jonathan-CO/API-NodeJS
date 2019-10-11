@@ -16,6 +16,6 @@ app.use(express.json())
 
 
 app.use('/', indexRoute)
-app.use('/usuario', usuarioRoute)
+app.use('/usuarios', usuarioRoute)
 
 module.exports = app

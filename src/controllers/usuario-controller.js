@@ -2,6 +2,26 @@
 const mongoose = require('mongoose')
 const Usuario = mongoose.model('Usuarios')
 
+exports.get = (req,res,next)=>{
+    Usuario.find({
+        active: true
+    }, 'name tel address').then((usuarios)=>{
+        res.status(200).send({usuarios: usuarios})
+    }).catch((err)=>{
+        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+    })
+}
+
+
+exports.getById = (req,res,next)=>{
+    Usuario.findById(req.params.id, 'name sex tel address tags').then((usuarios)=>{
+        res.status(200).send({usuarios: usuarios})
+    }).catch((err)=>{
+        res.status(400).send({message: "Erro ao cadastrar", data: erro})
+    })
+}
+
+
 exports.post = (req, res, next)=>{
     var usuario = new Usuario()
         usuario.name = req.body.name
