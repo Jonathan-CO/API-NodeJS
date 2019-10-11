@@ -67,5 +67,9 @@ exports.put =  (req, res, next)=>{
 }
 
 exports.delete = (req, res, next)=>{
-    res.status(200).send(req.body) // status 201 = created
+    Usuario.deleteOne( { _id: req.params.id} ).then(()=>{
+        res.status(200).send({message: "Usuário removido com sucesso"})
+    }).catch((erro)=>{
+        res.status(400).send({message: "Erro ao remover o usuário", data: erro})
+    }) 
 }
