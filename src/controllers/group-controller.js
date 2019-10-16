@@ -30,9 +30,8 @@ exports.post = async (req, res, next)=>{
     var group = new Group()
         group.name = req.body.name
         group.style = req.body.style
-        group.foundation = req.body.foundation
         group.contact = req.body.contact
-
+        group.members = req.body.members
     try {
         await repository.create(group)
         res.status(200).send({

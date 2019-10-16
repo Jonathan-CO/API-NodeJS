@@ -4,7 +4,7 @@ const Group = mongoose.model('Group')
  exports.get = async ()=>{
      const res = await Group.find({
          active: true
-     }, 'name style contact')
+     }, 'name style contact members')
     
      return res
  }

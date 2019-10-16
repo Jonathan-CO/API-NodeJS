@@ -8,7 +8,7 @@ const mongoose = require('../bin/db')
 const User = require('./models/User')
 const Group = require('./models/Group')
 const Event = require('./models/Event')
-const Work = require('./models/Work')
+//const Work = require('./models/Work')
 
 //Carrega rotas
 const indexRoute = require('./routes/index-route')

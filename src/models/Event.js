@@ -25,7 +25,28 @@ const schema = new Schema({
     place: {
         type: String,
         required: true,
-    }
+    },
+
+    staff: [
+        {
+            group: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Group'
+            },
+
+            workers:[{
+                worker: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User',
+                },
+        
+                perform:{
+                    type: Boolean,
+                    default: true
+                }
+            }]
+        }
+    ]
 
 })
 
