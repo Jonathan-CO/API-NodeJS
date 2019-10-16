@@ -2,6 +2,8 @@
 const mongoose = require('mongoose')
 const Usuario = mongoose.model('Usuarios')
 
+const ValidationContract = require('../validators/validator')
+
 exports.get = (req,res,next)=>{
     Usuario.find({
         active: true
@@ -11,7 +13,6 @@ exports.get = (req,res,next)=>{
         res.status(400).send({message: "Erro ao listar usuários", data: erro})
     })
 }
-
 
 exports.getById = (req,res,next)=>{
     Usuario.findById(req.params.id, 'name sex tel address tags').then((usuarios)=>{
@@ -32,8 +33,16 @@ exports.getByTag = (req, res, next)=>{
     })
 }
 
-
 exports.post = (req, res, next)=>{
+
+    let contract = new ValidationContract();
+
+    contract.hasMinLen(req.body.nome, 3, 'O nome deve conter pelo menos 3 letras')
+
+    if(!contract.isValid()){
+        res.status(200).send(contract.errors()).end()
+        return
+    }
     var usuario = new Usuario()
         usuario.name = req.body.name
         usuario.sex = req.body.sex
