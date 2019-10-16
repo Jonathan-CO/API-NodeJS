@@ -14,11 +14,6 @@ const schema = new Schema({
         trim: true
     },
 
-    foundation: {
-        type: Date,
-        required: true,
-    },
-
     contact: {
         type: String,
         required: true
