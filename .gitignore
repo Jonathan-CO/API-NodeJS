@@ -100,3 +100,4 @@ public/
 
 steps
 /bin/db.js
+/src/config.js
