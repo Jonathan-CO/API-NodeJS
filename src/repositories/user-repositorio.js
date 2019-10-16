@@ -1,30 +1,36 @@
 const mongoose = require('mongoose')
 const User = mongoose.model('User')
 
-exports.get = ()=>{
-    return User.find({
+exports.get = async ()=>{
+    const res = await User.find({
         active: true
     }, 'name tel address')
+    
+    return res
 }
 
-exports.getById = (id)=>{
-    return User.findById(
+exports.getById = async (id)=>{
+    const res = User.findById(
         id, 'name sex tel address tags')
+
+    return res
 }
 
-exports.getByTag = (tags)=>{
-    return User.find({
+exports.getByTag = async (tags)=>{
+    const res =  User.find({
         tags: tags,
         active: true
     }, 'name sex tel address')
+
+    return res
 }
 
-exports.create = (user)=>{
-    return user.save()
+exports.create = async (user)=>{
+    await user.save()
 }
 
-exports.update = (id, data)=>{
-    return User.findByIdAndUpdate( id, {
+exports.update = async (id, data)=>{
+    await User.findByIdAndUpdate( id, {
         $set:{
             name: data.name,
             sex: data.sex,
@@ -37,6 +43,6 @@ exports.update = (id, data)=>{
 }
 
 
-exports.delete = (id)=>{
-    return User.deleteOne( {_id: id} )
+exports.delete = async (id)=>{
+    await User.deleteOne( {_id: id} )
 }

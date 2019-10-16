@@ -5,32 +5,54 @@ const User = mongoose.model('User')
 const ValidationContract = require('../validators/validator')
 const repository = require('../repositories/user-repositorio')
 
-exports.get = (req,res,next)=>{
 
-    repository.get().then((users)=>{
-        res.status(200).send({users: users})
-    }).catch((err)=>{
-        res.status(400).send({message: "Erro ao listar usuários", data: erro})
-    })
+//Utilizando Promises
+// exports.get = (req,res,next)=>{
+
+//     repository.get().then((users)=>{
+//         res.status(200).send({users: users})
+//     }).catch((err)=>{
+//         res.status(400).send({message: "Erro ao listar usuários", data: erro})
+//     })
+// }
+
+exports.get = async (req,res,next)=>{
+    try {
+        var data = await repository.get()
+        res.status(200).send(data)
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
 }
 
-exports.getById = (req,res,next)=>{
-    repository.getById(req.params.id).then((users)=>{
-        res.status(200).send({users: users})
-    }).catch((err)=>{
-        res.status(400).send({message: "Erro ao buscar usuário", data: erro})
-    })
+
+exports.getById = async(req,res,next)=>{
+
+    try {
+        var data = await repository.getById(req.params.id)
+        res.status(200).send(data)
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
 }
 
-exports.getByTag = (req, res, next)=>{
-    repository.getByTag(req.params.tag).then((users)=>{
-        res.status(200).send({users: users})
-    }).catch((err)=>{
-        res.status(400).send({message: "Erro ao buscar usuário", data: erro})
-    })
+exports.getByTag = async(req, res, next)=>{
+
+    try {
+        var data = await repository.getByTag(req.params.tag)
+        res.status(200).send(data)
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
 }
 
-exports.post = (req, res, next)=>{
+exports.post = async (req, res, next)=>{
 
     let contract = new ValidationContract();
 
@@ -48,26 +70,40 @@ exports.post = (req, res, next)=>{
         user.address = req.body.address
         user.tags = req.body.tags.toLowerCase()
 
-    repository.create(user).then(()=>{
-        res.status(200).send({message: "Usuário cadastrado com sucesso"})
-    }).catch((erro)=>{
-        res.status(400).send({message: "Erro ao cadastrar usuário", data: erro})
-    })
+    try {
+        await repository.create(user)
+        res.status(200).send({
+            message: "Usuário cadastrado com sucesso"
+
+        })
+    }catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
 }
 
-exports.put =  (req, res, next)=>{
-    repository.update(req.params.id, req.body).then(()=>{
-        res.status(200).send({message: "Usuário editado com sucesso"})
-    }).catch((erro)=>{
-        res.status(400).send({message: "Erro ao editar o usuário", data: erro})
-    })
-}
+exports.put =  async (req, res, next)=>{
+    try {
+        await repository.update(req.params.id, req.body)
+        res.status(200).send({
+            message: "Usuário editado com sucesso"
+        })
+    }catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
+} 
 
-exports.delete = (req, res, next)=>{
-    repository.delete(req.params.id).then(()=>{
+exports.delete = async (req, res, next)=>{
+    try {
+        await repository.delete(req.params.id)
         res.status(200).send({message: "Usuário removido com sucesso"})
-    }).catch((erro)=>{
-        res.status(400).send({message: "Erro ao remover o usuário", data: erro})
-    }) 
-}
+    } catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
+} 
 
