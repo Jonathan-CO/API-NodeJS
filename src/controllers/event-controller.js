@@ -32,6 +32,7 @@ exports.post = async (req, res, next)=>{
         event.arrive = req.body.arrive
         event.start = req.body.start
         event.place = req.body.place
+        event.staff = req.body.staff
 
     try {
         await repository.create(event)

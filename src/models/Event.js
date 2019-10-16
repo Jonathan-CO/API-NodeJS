@@ -34,7 +34,7 @@ const schema = new Schema({
                 ref: 'Group'
             },
 
-            workers:[{
+            workers: [{
                 worker: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'User',

@@ -26,7 +26,7 @@ const schema = new Schema({
     },
 
     members: [{
-        user: {
+        member: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
