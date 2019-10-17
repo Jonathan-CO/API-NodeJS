@@ -4,6 +4,8 @@ const Event = mongoose.model('Event')
 
 const ValidationContract = require('../validators/validator')
 const repository = require('../repositories/event-repositorio')
+const authService = require('../services/auth-services')
+
 
 exports.get = async (req,res,next)=>{
     try {
@@ -35,6 +37,10 @@ exports.post = async (req, res, next)=>{
         event.staff = req.body.staff
 
     try {
+
+
+
+
         await repository.create(event)
         res.status(200).send({
             message: "Evento criado com sucesso"

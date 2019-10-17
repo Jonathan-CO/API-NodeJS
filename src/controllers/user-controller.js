@@ -115,8 +115,8 @@ exports.authenticate = async (req, res, next)=>{
     try {
         const user = await repository.authenticate({
             email: req.body.email,
-            // password: md5(req.body.password + global.SALT_KEY)
             password: req.body.password
+            // password: md5(req.body.password + global.SALT_KEY)
         })
 
         if(!user){
@@ -127,6 +127,7 @@ exports.authenticate = async (req, res, next)=>{
         }
         
         const token = await authService.generateToken({
+            id: user._id, //quando necessitar do ID do usuário
             name: user.name,
             email: user.email
         })
