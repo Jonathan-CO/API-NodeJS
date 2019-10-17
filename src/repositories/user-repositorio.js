@@ -10,11 +10,16 @@ exports.get = async ()=>{
 }
 
 exports.getById = async (id)=>{
-    const res = User.findById(
-        id, 'name sex tel address tags')
-
+    const res = User.findById(id)
     return res
 }
+
+// exports.getById = async (id)=>{
+//     const res = User.findById(
+//         id, 'name sex tel address tags')
+
+//     return res
+// }
 
 exports.getByTag = async (tags)=>{
     const res =  User.find({
