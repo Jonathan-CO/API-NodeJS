@@ -4,6 +4,7 @@ const User = mongoose.model('User')
 
 const ValidationContract = require('../validators/validator')
 const repository = require('../repositories/user-repositorio')
+const authService = require('../services/auth-services')
 
 
 //Utilizando Promises
@@ -67,14 +68,16 @@ exports.post = async (req, res, next)=>{
         user.sex = req.body.sex
         user.birthdate = req.body.birthdate
         user.tel = req.body.tel
+        user.email = req.body.email
+        user.password = req.body.password
         user.address = req.body.address
         user.tags = req.body.tags.toLowerCase()
 
     try {
         await repository.create(user)
+        
         res.status(200).send({
-            message: "Usuário cadastrado com sucesso"
-
+            message: "Usuário cadastrado com sucesso",
         })
     }catch (error) {
         res.status(500).send({
@@ -107,3 +110,39 @@ exports.delete = async (req, res, next)=>{
     }
 } 
 
+exports.authenticate = async (req, res, next)=>{
+
+    try {
+        const user = await repository.authenticate({
+            email: req.body.email,
+            // password: md5(req.body.password + global.SALT_KEY)
+            password: req.body.password
+        })
+
+        if(!user){
+            res.status(404).send({
+                message: 'Usuário ou Senha inválidos'
+            })
+            return
+        }
+        
+        const token = await authService.generateToken({
+            name: user.name,
+            email: user.email
+        })
+
+        
+        res.status(200).send({
+            token: token,
+            data:{
+                name: user.name,
+                email: user.email,
+            }
+        })
+
+    }catch (error) {
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        })
+    }
+}

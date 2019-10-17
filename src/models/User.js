@@ -26,16 +26,28 @@ const schema = new Schema({
         required: true,
         trim: true
     },
+    
+    email: {
+        type: String,
+        require: true
+    },
+    password:{
+        type: String,
+        require: true
+    },
+
     active:{
         type: Boolean,
         required: true,
         default: true
     },
+
     tags:[{
         type: String,
         required: true,
         trim: true
-    }]
+    }],
+
 })
 
 module.exports = mongoose.model('User', schema)

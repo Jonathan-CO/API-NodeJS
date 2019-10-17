@@ -46,3 +46,12 @@ exports.update = async (id, data)=>{
 exports.delete = async (id)=>{
     await User.deleteOne( {_id: id} )
 }
+
+exports.authenticate = async (data)=>{
+    const res = await User.findOne({
+        email: data.email,
+        password: data.password
+    })
+    
+    return res
+}
