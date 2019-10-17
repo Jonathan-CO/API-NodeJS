@@ -72,6 +72,7 @@ exports.post = async (req, res, next) => {
     user.password = req.body.password
     user.address = req.body.address
     user.tags = req.body.tags.toLowerCase()
+    user.roles = req.body.roles
 
     try {
         await repository.create(user)
@@ -129,7 +130,8 @@ exports.authenticate = async (req, res, next) => {
         const token = await authService.generateToken({
             id: user._id, //quando necessitar do ID do usuário
             name: user.name,
-            email: user.email
+            email: user.email,
+            roles: user.roles
         })
 
 
@@ -138,6 +140,7 @@ exports.authenticate = async (req, res, next) => {
             data: {
                 name: user.name,
                 email: user.email,
+                roles: user.roles
             }
         })
 
@@ -168,7 +171,8 @@ exports.refreshToken = async (req, res, next) => {
         const token = await authService.generateToken({
             id: user._id, //quando necessitar do ID do usuário
             name: user.name,
-            email: user.email
+            email: user.email,
+            roles: user.roles
         })
 
 
@@ -177,6 +181,7 @@ exports.refreshToken = async (req, res, next) => {
             data: {
                 name: user.name,
                 email: user.email,
+                roles: user.roles
             }
         })
 
