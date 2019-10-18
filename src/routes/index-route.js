@@ -4,7 +4,8 @@ const router = express.Router()
 router.get('/', (req, res, next)=>{
     res.status(200).send({ //status 200 = OK
         title: "Node Store API",
-        version: '0.0.1'
+        version: '1.0.0',
+        About: "Esta API foi desenvolvida com NodeJS e tem como objetivo..."
     });
 });
 
